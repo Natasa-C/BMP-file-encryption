@@ -17,7 +17,7 @@ To run:		    ./script
 
 int main()
 {
-    unsigned char source_file_name[] = "input_resources/criptare.txt";
+    unsigned char source_file_name[] = "input_resources/encrypt.txt";
     unsigned char BMP_sorce_file_name[FILE_NAME_LENGTH];
     unsigned char BMP_encrypted_file_name[FILE_NAME_LENGTH];
     unsigned char BMP_decrypted_file_name[FILE_NAME_LENGTH];
