@@ -1,0 +1,4 @@
+input_resources/peppers.bmp
+output/BMPencrypted.bmp
+output/BMPdecrypted.bmp
+input_resources/secret_key.txt
