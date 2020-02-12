@@ -1,4 +1,0 @@
-input_resources/peppers.bmp
-output/BMPcriptat.bmp
-output/BMPdecriptat.bmp
-input_resources/secret_key.txt
