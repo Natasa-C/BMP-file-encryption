@@ -173,3 +173,28 @@ In this project we will consider that two windows overlap if their spatial overl
 ![we3](https://user-images.githubusercontent.com/57111995/74460726-0c800980-4e96-11ea-8f5f-e621fa257605.png)
 
 After applying the non-maximum elimination algorithm we eliminate all overlapping detections. The remaining detections provide better performance for the handwriting digit recognition algorithm using template matching.
+
+## Requirements:
+1) Write a function that implements the template matching operation between an image I and a template S. The function will have as parameters the image I, the template S and the threshold p<sub>S</sub> and provides f<sub>I</sub> which have a higher correlation than the threshold p<sub>S</sub>.
+2) Write a function that receives as an parameter an image I, a window f<sub>I</sub> and a color C = (C<sup>R</sup>, C<sup>G</sup>, C<sup>B</sup>) and draws the outline of the window f<sub>I</sub> over image I using color C (as in the examples above).
+3) Using the qsort function in the stdlib.h library, write a function that sorts a D array of detections in the descending order of the detection correlations.
+4) Write a function that implements the non-maximum elimination algorithm.
+5) Write a program that performs the following operations: 
+• encrypt a BMP color image and save the encrypted image to the external memory (both image paths and the text file containing the secret key will be read from the keyboard or from a text file);
+• decrypt an encrypted BMP color image and save the decrypted image to external memory (both image paths and the text file containing the secret key will be read from the keyboard or from a text file);
+• displays the χ<sup>2</sup> test values ​ for the initial image and the encrypted image, on each color channel.
+• runs the template matching operation for a BMP color image and a collection of BMP color templates. Always use a threshold pχ<sub>2</sub> = 0.5 regardless of the template chosen. Gather all the resulting detections for each template in a single one-dimensional array D. The image paths and BMP templates will be read from the keyboard or from a text file.
+• run the non-maximum elimination function on the D array and draw the remaining detections in the image using a specific color for each template.
+
+When drawing the appropriate windows, use the following colors:
+- For digit 0 - red color: (255, 0, 0)
+- For digit 1 - yellow: (255, 255, 0)
+- For digit 2 - green color: (0, 255, 0)
+- For digit 3 - cyan color: (0, 255, 255)
+- For digit 4 - magenta color: (255, 0, 255)
+- For digit 5 - blue color: (0, 0, 255)
+- For digit 6 - silver color: (192,192, 192)
+- For digit 7 - blue color: (255, 140, 0)
+- For digit 8 - magenta color: (128, 0, 128)
+- For digit 9 - blue color: (128, 0, 0)
+
