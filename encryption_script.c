@@ -28,7 +28,7 @@ int main()
     fin = fopen(source_file_name, "r");
     if (fin == NULL)
     {
-        printf("File could not be opened %s!", source_file_name);
+        printf("In function -main- file could not be opened %s!", source_file_name);
         return 0;
     }
 
