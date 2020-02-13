@@ -27,7 +27,7 @@ where by [x] we note the whole part of the real number x. The grayscale image ob
 ![fig1](https://user-images.githubusercontent.com/57111995/74440714-31b14f80-4e77-11ea-9a73-ce1ddb057b31.png)
 
 
-## The encryption / decryption module
+# The encryption / decryption module
 Cryptography is a branch of mathematics that deals with the secure transmission of information. One of the desires of cryptography is to ensure the confidentiality of data, so that certain information can only be accessed by authorized persons. We achieve this goal by using an encryption process by which intelligible information (a text, an image, an audio file, etc.) is transformed into an unintelligible one. The inverse transformation, by which the encrypted information is returned to the original shape (intelligible) is performed by means of a decryption process. 
 
 A symmetrical figure consists of a pair of algorithms that ensure the encryption and decryption processes, as well as a common secret key (known only to people who want to communicate with each other in a secure way) that controls the two processes.
@@ -120,3 +120,26 @@ From the previous numerical values it can be observed that the image in clear ha
 4) Write a function that encrypts a BMP image using the encryption algorithm presented. The function will have as parameters the path of the initial image, the path of the encrypted image and the path of a text file containing the secret key.
 5) Write a function that decrypts an encrypted BMP image using the presented decryption algorithm. The function will have as parameters the path of the initial image, the path of the encrypted image and the path of a text file containing the secret key.
 6) Write a function that displays the χ<sup>2</sup> test values for a BMP image on each color channel. The function will have as a parameter the image path.
+
+# The pattern recognition module
+Digital image processing is a branch of computer science that uses algorithms for image processing in digital (and not analog) format in order to extract useful information from images to solve complex problems. Such a complex problem is the recognition of patterns, customized in this project to the problem of recognizing the numbers written by hand in an image.
+![Screenshot at 2020-02-13 18-40-01](https://user-images.githubusercontent.com/57111995/74456972-48b06b80-4e90-11ea-8488-2ce610777fab.png)
+
+The problem of recognizing handwritten figures is a fundamental problem in digital image processing. The problem is difficult because the numbers differ in size, appearance, color, gradient, etc. The most complex algorithms use machine learning and learn a model for each digit from tens of thousands of images. Their performance on this issue is comparable to that of people.
+
+For this project we will use a simple method in recognizing handwritten figures in an image, namely finding templates ([Template matching](https://en.wikipedia.org/wiki/Template_matching)). This method consists of finding small parts of an image that match a template image. For the problem of recognizing handwritten figures we will use 10-digit images as templates. Each template is a color image (it has 3 channels) with dimensions 11 × 15 pixels (11 pixels wide, 15 pixels high). The template matching algorithm applied for a color image I  and a template S (a color image representing a figure) works as follows:
+1) transform the color image I and the template S into grayscale images.
+2) slide the current template on image I by centering the template in each point of the image I. Calculate for each position (x, y) in image I the correlation ([Cross-correlation](https://en.wikipedia.org/wiki/Cross-correlation)) between the current template and the corresponding content of the image given by the window f<sub>1</sub> = f<sub>1</sub> (x, y) centered on point (x, y). The formula for calculating the correlation between template S and window f<sub>1</sub> is the following:
+![form1](https://user-images.githubusercontent.com/57111995/74458099-de98c600-4e91-11ea-9eb3-8609f28fedef.png)
+
+where:
+- n represents the number of pixels of template S (in particular for templates used with dimensions 11 × 15 pixels we have n = 11 * 15 = 165);
+- indices i and j represent line i and column j in template S (15 lines and 11 columns);
+- S (i, j) represents the value of the grayscale intensity of the pixel from line i and column j in template S. For a grayscale image, a pixel P = (P<sup>R</sup>, P<sup>G</sup>, P<sup>B</sup>) is represented by a triplet with all the values equal P<sup>R</sup> = P<sup>G</sup> = P<sup>B</sup> . In this case the value of the grayscale intensity of P is P<sup>R</sup>;
+- S<sup>-</sup> represents the average of the grayscale intensities of the pixels in the S window (the average of the 165 pixels in the S template);
+- σ<sub>S</sub> represents the standard deviation of the pixel grayscale intensities values in the S pattern:
+![form2](https://user-images.githubusercontent.com/57111995/74458596-9f1ea980-4e92-11ea-92a2-cfec30c0efb1.png)
+- f<sub>I</sub>(i, j) represents the value of the grayscale intensity of the pixel from line i and column j in the window f<sub>I</sub>;
+- f<sup>-</sup><sub>I</sub> represents the average of the values of the grayscale intensities of the pixels in the window f<sub>I</sub> (average of 165 pixels in window f<sub>I</sub>);
+- σ<sub>f<sub>I</sub></sub> represents the standard deviation of the values of the grayscale intensities of the pixels in the window f<sub>I</sub> :
+![form3](https://user-images.githubusercontent.com/57111995/74459030-4996cc80-4e93-11ea-911e-094118e3d423.png)
