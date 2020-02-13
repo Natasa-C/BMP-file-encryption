@@ -24,7 +24,8 @@ Because the encoding of a BMP image in a binary file follows the little-endian s
 
 where by [x] we note the whole part of the real number x. The grayscale image obtained has the property that it also uses 3 bytes to represent the color of each pixel, but all the values on the 3 channels are equal.
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! figure !!!!!!!!!!!
+![fig1](https://user-images.githubusercontent.com/57111995/74440714-31b14f80-4e77-11ea-9a73-ce1ddb057b31.png)
+
 
 ## The encryption / decryption module
 Cryptography is a branch of mathematics that deals with the secure transmission of information. One of the desires of cryptography is to ensure the confidentiality of data, so that certain information can only be accessed by authorized persons. We achieve this goal by using an encryption process by which intelligible information (a text, an image, an audio file, etc.) is transformed into an unintelligible one. The inverse transformation, by which the encrypted information is returned to the original shape (intelligible) is performed by means of a decryption process. 
@@ -37,8 +38,11 @@ In the following, we will describe a simple symmetric cipher that can be used to
 
 1) Be I = ( I<sub>i, j</sub>), 0&le; i &lt; H, 0&le; j&lt; W,  a color image with the width of W pixels and the height of H pixels in matrix form. The linearization of the image I implies the creation of a one-dimensional array L by aligning the lines of the two-dimensional picture I, from top to bottom.
 
+matrix form                |  linearized form        
+:-------------------------:|:-------------------------:
+![ff (copy)](https://user-images.githubusercontent.com/57111995/74440755-45f54c80-4e77-11ea-8fd9-7835214fb874.png)   | ![ff (another copy)](https://user-images.githubusercontent.com/57111995/74440782-53123b80-4e77-11ea-8da2-a18916923c13.png)  
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! figure !!!!!!!!!!!
+
 
 2) considering a color image I in linear form, the value of each pixel I<sub>k</sub> will be a triplet of unsigned bytes I<sub>k</sub> = (I<sub>k</sub><sup>R</sup>, I<sub>k</sub><sup>G</sup>, I<sub>k</sub><sup>B</sup>).
 
