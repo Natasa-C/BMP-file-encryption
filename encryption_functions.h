@@ -7,7 +7,7 @@ typedef struct
 } Pixel;
 
 void allocateMemoryForUnsignedCharArrays(unsigned char **array, unsigned int length);
-void allocateMemoryFoPixelArrays(Pixel **array, unsigned int length);
+void allocateMemoryForPixelArrays(Pixel **array, unsigned int length);
 void allocateMemoryForUnsignedIntArrays(unsigned int **array, unsigned int length);
 void readWidthAndHeight(unsigned char *source_file_name, int *width, int *height);
 void readR0andSV(unsigned char *key_file_name, unsigned int *R0, unsigned int *SV);
