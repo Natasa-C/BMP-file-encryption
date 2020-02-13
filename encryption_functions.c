@@ -17,11 +17,11 @@ void allocateMemoryForUnsignedCharArrays(unsigned char **array, unsigned int len
         printf("\nIn function -allocateMemoryForUnsignedCharArrays-, memory could not be allocated for the array!\n");
 }
 
-void allocateMemoryFoPixelArrays(Pixel **array, unsigned int length)
+void allocateMemoryForPixelArrays(Pixel **array, unsigned int length)
 {
     (*array) = (Pixel *)malloc(length * sizeof(Pixel));
     if ((*array) == NULL)
-        printf("\nIn function -allocateMemoryFoPixelArrays-, memory could not be allocated for the array!\n");
+        printf("\nIn function -allocateMemoryForPixelArrays-, memory could not be allocated for the array!\n");
 }
 
 void allocateMemoryForUnsignedIntArrays(unsigned int **array, unsigned int length)
@@ -47,7 +47,7 @@ void readWidthAndHeight(unsigned char *source_file_name, int *width, int *height
     fseek(f, HEIGHT_POSITION_IN_HEADER, SEEK_SET);
     fread(height, sizeof(unsigned int), 1, f);
     if (fclose(f) != 0)
-        printf("\nIn function -readWidthAndHeight- file could not be close %s!\n", source_file_name);
+        printf("\nIn function -readWidthAndHeight- file could not be closed %s!\n", source_file_name);
 }
 
 void readR0andSV(unsigned char *key_file_name, unsigned int *R0, unsigned int *SV)
@@ -62,18 +62,18 @@ void readR0andSV(unsigned char *key_file_name, unsigned int *R0, unsigned int *S
     }
     fscanf(f, "%u %u", R0, SV);
     if (fclose(f) != 0)
-        printf("\nIn function -readR0andSV- file could not be close %s\n!", key_file_name);
+        printf("\nIn function -readR0andSV- file could not be closed %s\n!", key_file_name);
 }
 
-void loadLinearizedHeaderInInternalMemory(unsigned char *nume_fisier_sursa, unsigned char **vector)
+void loadLinearizedHeaderInInternalMemory(unsigned char *source_file_name, unsigned char **vector)
 {
     FILE *f;
     unsigned int i;
 
-    f = fopen(nume_fisier_sursa, "rb");
+    f = fopen(source_file_name, "rb");
     if (f == NULL)
     {
-        printf("\nIn function -loadLinearizedHeaderInInternalMemory- file could not be opened %s\n!", nume_fisier_sursa);
+        printf("\nIn function -loadLinearizedHeaderInInternalMemory- file could not be opened %s\n!", source_file_name);
         return;
     }
 
@@ -82,7 +82,7 @@ void loadLinearizedHeaderInInternalMemory(unsigned char *nume_fisier_sursa, unsi
         fread(&((*vector)[i]), sizeof(unsigned char), 1, f);
 
     if (fclose(f) != 0)
-        printf("\nIn function -loadLinearizedHeaderInInternalMemory- file could not be close %s\n!", nume_fisier_sursa);
+        printf("\nIn function -loadLinearizedHeaderInInternalMemory- file could not be closed %s\n!", source_file_name);
 }
 
 void loadLinearizedBMPImageInInternalMemory(unsigned char *souce_file_name, Pixel **image_array, unsigned int W, unsigned int H)
@@ -114,7 +114,7 @@ void loadLinearizedBMPImageInInternalMemory(unsigned char *souce_file_name, Pixe
         }
     }
     if (fclose(f) != 0)
-        printf("\nIn function -loadLinearizedBMPImageInInternalMemory- file could not be close %s\n!", souce_file_name);
+        printf("\nIn function -loadLinearizedBMPImageInInternalMemory- file could not be closed %s\n!", souce_file_name);
 }
 
 void saveLinearizedBMPImageInExternalMemory(unsigned char *destination_file_name, unsigned char *header_array, Pixel *BMP_image_array, unsigned int W, unsigned int H)
@@ -147,7 +147,7 @@ void saveLinearizedBMPImageInExternalMemory(unsigned char *destination_file_name
     }
 
     if (fclose(f) != 0)
-        printf("\nIn function -salvareBMPInMeomoriaExterna- file could not be close %s\n!", destination_file_name);
+        printf("\nIn function -salvareBMPInMeomoriaExterna- file could not be closed %s\n!", destination_file_name);
 }
 
 void XORSHIFT32(unsigned int length, unsigned int seed, unsigned int **array)
@@ -187,7 +187,7 @@ void permuteThePixelsOfLinearizedImage(Pixel **BMP_array, unsigned int *permutat
     Pixel *aux;
     unsigned int k;
 
-    allocateMemoryFoPixelArrays(&aux, BMP_array_length);
+    allocateMemoryForPixelArrays(&aux, BMP_array_length);
 
     for (k = 0; k < BMP_array_length; k++)
         aux[permutation[k]] = (*BMP_array)[k];
@@ -241,7 +241,7 @@ void encryptBMPimage(unsigned char *source_file_name, unsigned char *destination
 
     readWidthAndHeight(source_file_name, &W, &H);
     allocateMemoryForUnsignedCharArrays(&header, HEADER_LENGTH);
-    allocateMemoryFoPixelArrays(&LinearizedBMPimage, W * H);
+    allocateMemoryForPixelArrays(&LinearizedBMPimage, W * H);
     loadLinearizedHeaderInInternalMemory(source_file_name, &header);
     loadLinearizedBMPImageInInternalMemory(source_file_name, &LinearizedBMPimage, W, H);
 
@@ -285,7 +285,7 @@ void decryptPixelsOfLinearizedImage(Pixel **BMP_array, unsigned int *random_numb
     unsigned int k;
     Pixel *aux;
 
-    allocateMemoryFoPixelArrays(&aux, W * H);
+    allocateMemoryForPixelArrays(&aux, W * H);
 
     for (k = 0; k < W * H; k++)
     {
@@ -316,7 +316,7 @@ void dencryptBMPimage(unsigned char *source_file_name, unsigned char *destinatio
 
     readWidthAndHeight(source_file_name, &W, &H);
     allocateMemoryForUnsignedCharArrays(&header, HEADER_LENGTH);
-    allocateMemoryFoPixelArrays(&LinearizedBMPimage, W * H);
+    allocateMemoryForPixelArrays(&LinearizedBMPimage, W * H);
     loadLinearizedHeaderInInternalMemory(source_file_name, &header);
     loadLinearizedBMPImageInInternalMemory(source_file_name, &LinearizedBMPimage, W, H);
 
@@ -385,7 +385,7 @@ void chiSquaredTest(unsigned char *sorce_file_name)
     Pixel *LinearizedBMPimage;
 
     readWidthAndHeight(sorce_file_name, &W, &H);
-    allocateMemoryFoPixelArrays(&LinearizedBMPimage, W * H);
+    allocateMemoryForPixelArrays(&LinearizedBMPimage, W * H);
     loadLinearizedBMPImageInInternalMemory(sorce_file_name, &LinearizedBMPimage, W, H);
 
     printf("Chi-squared test on RGB channels for %s:\n", sorce_file_name);
