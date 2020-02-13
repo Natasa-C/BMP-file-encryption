@@ -123,6 +123,7 @@ From the previous numerical values it can be observed that the image in clear ha
 
 # The pattern recognition module
 Digital image processing is a branch of computer science that uses algorithms for image processing in digital (and not analog) format in order to extract useful information from images to solve complex problems. Such a complex problem is the recognition of patterns, customized in this project to the problem of recognizing the numbers written by hand in an image.
+
 ![Screenshot at 2020-02-13 18-40-01](https://user-images.githubusercontent.com/57111995/74456972-48b06b80-4e90-11ea-8488-2ce610777fab.png)
 
 The problem of recognizing handwritten figures is a fundamental problem in digital image processing. The problem is difficult because the numbers differ in size, appearance, color, gradient, etc. The most complex algorithms use machine learning and learn a model for each digit from tens of thousands of images. Their performance on this issue is comparable to that of people.
@@ -143,3 +144,32 @@ where:
 - f<sup>-</sup><sub>I</sub> represents the average of the values of the grayscale intensities of the pixels in the window f<sub>I</sub> (average of 165 pixels in window f<sub>I</sub>);
 - σ<sub>f<sub>I</sub></sub> represents the standard deviation of the values of the grayscale intensities of the pixels in the window f<sub>I</sub> :
 ![form3](https://user-images.githubusercontent.com/57111995/74459030-4996cc80-4e93-11ea-911e-094118e3d423.png)
+
+At the edges of the image I, the template S comes out of the image I. You can implement this limit case by adding pixels with the value 0 (black pixels) outside the image I. A less elegant option is to consider only the positions (x, y) in image I for which template S fits in image I.
+
+Correlation between template S and the corresponding window f<sub>I</sub> is large at the positions (x, y) of the image I where the content of the image matches the content of the template S. The correlation is a real number between -1 and 1, a correlation value of 1 indicates a perfect correlation with the template S. For viewing the windows f<sub>I</sub> with a high correlation with the S pattern (named in the following detections) the following are realized:
+1. windows with correlation greater than a threshold p<sub>S</sub> are kept as detections. Low values of threshold p<sub>S</sub> lead to a large number of detections f<sub>I</sub> , high values of the threshold p<sub>S</sub> lead to a small number of detections f<sub>I</sub> .
+2. for visualizing the f<sub>I</sub> detections we can color the outline of the window f<sub>I</sub> with a certain color in the picture.
+
+The figure shows the results obtained for templates with figures 0 and 5 and thresholds 0.35 and 0.70.
+
+![hghghg](https://user-images.githubusercontent.com/57111995/74459853-a777e400-4e94-11ea-8914-730292e6d05a.png)
+
+Running all 10 templates on image I for different values will lead to similar results, depending on the threshold chosen. When we gather the detections of all the figures we will see that they overlap very much:
+![we1](https://user-images.githubusercontent.com/57111995/74460106-0fc6c580-4e95-11ea-923d-1bd173b256cd.png)
+
+In practice, a technique called elimination of non-maximum is used to avoid this phenomenon. It consists of the following:
+1) all detections obtained for all 10 templates are placed in a one-dimensional array D;
+2) D is sorted decreasing according to the correlation score of each detection;
+3) the table D is processed from left (detections with very high score) to right (detections with very low score) as follows: all detections d<sub>j</sub> which overlaps spatially with the current detection d<sub>i</sub>, with i <j and score (d<sub>i</sub>)> score (d<sub>j</sub>) is deleted.
+
+Spatial overlap between two detections d<sub>i</sub> and d<sub>j</sub> is measured as the ratio between the intersection and the meeting area of the two windows. (suprapunere = overlap, aria = area)
+
+![we2](https://user-images.githubusercontent.com/57111995/74460650-de9ac500-4e95-11ea-8322-7d9c7bc00b75.png)
+
+In this project we will consider that two windows overlap if their spatial overlap is > 0.2.
+
+
+![we3](https://user-images.githubusercontent.com/57111995/74460726-0c800980-4e96-11ea-8f5f-e621fa257605.png)
+
+After applying the non-maximum elimination algorithm we eliminate all overlapping detections. The remaining detections provide better performance for the handwriting digit recognition algorithm using template matching.
