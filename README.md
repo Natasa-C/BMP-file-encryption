@@ -23,7 +23,7 @@ BMPencrypted.bmp           |  BMPdecrypted.bmp
 ![chi](https://user-images.githubusercontent.com/57111995/74325582-89758b00-4d91-11ea-8dee-71f2daf85861.png) 
 
 ## Project theme
-Cryptography and digital image processing are two very important areas of mathematics and computer science. The project theme combines two problems from these sub-domains, namely the encryption and decryption of a message (customized in this project to an image).
+Cryptography is a very important area of mathematics and computer science. The project theme is the encryption and decryption of a message (customized in this project to an image).
 
 The scenario to be implemented in this project is the following: person A sends to person B an image I encrypted using an encryption algorithm. B can decrypt the encrypted image received from A thus obtaining the initial image I. 
 
