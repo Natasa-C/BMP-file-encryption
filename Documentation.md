@@ -56,3 +56,28 @@ used.
 
 6) a pseudo-random number generator is a deterministic algorithm that generates a sequence of numbers having statistical properties similar to those of a perfectly random sequence of numbers (that is, a sequence of numbers for which the probability of occurrence of a given value is independent of all values previously generated) starting from a seed value.  For example, the XORSHIFT32 generator proposed by George Marsaglia in 2003 generates unsigned 32-bit integers with very good pseudo-random character, using shift operations on bits and XOR [Xorshift](https://en.wikipedia.org/wiki/Xorshift).
 
+### Encrypting steps:
+Using the above notations, the encryption algorithm of a color image P (plain image) of size W × H in linear form P = (P<sub>0</sub>,  P<sub>1</sub> , ..., P<sub> W * H - 1</sub>) using a secret key S is the following:
+
+- generate R: a 2 * W * H - 1 long sequence consisting of 32-bit unsigned random integers, using the XORSHIFT32 generator initialized with a non-zero value R<sub>0</sub>
+- generate a random permutation σ of size W × H, using Durstenfeld's algorithm - the modern version of the [Fisher-Yates algorithm](https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle) and the pseudo-random numbers R<sub>1</sub>, ..., R<sub> W * H - 1</sub>
+- the pixels of the image P are permuted according to the permutation σ, obtaining an intermediate image P'.  For example, considering the image P = (P<sub>0</sub>,  P<sub>1</sub> , P<sub>2</sub>, P<sub>3</sub>)  and the permutation σ = (<sup>0</sup><sub>3</sub><sup>1</sup><sub>0</sub> <sup>2</sup><sub>2</sub> <sup>3</sup><sub>1</sub>) we will obtain the image P' = (P<sub>1</sub>,  P<sub>3</sub> , P<sub>2</sub>, P<sub>0</sub>)   because the pair (k, σ (k)) indicates that the pixel at position k in the image P will be moved to the position σ(k) in the image P', that is P'<sub>σ(k)</sub> = P<sub>k</sub> for any k ∈ {0,1, ..., W ∗ H - 1}
+- the encrypted image C = (C<sub>0</sub>, C<sub>1</sub>, ..., C<sub> W * H - 1</sub>) is obtained by applying the following relation of substitution to each pixel of the image P' = P<sub>0</sub>,  P<sub>1</sub> , ..., P<sub> W * H - 1</sub>:
+![hh](https://user-images.githubusercontent.com/57111995/74433186-9a450000-4e68-11ea-8171-a183100e0404.png)
+
+where SV (starting value) is a 32-bit non-zero integer.
+
+Shared secret key of this cipher is composed of the R and SV, both non-zero unsigned 32-bit integers. To ensure a high level of security of this figure, the common secret key must be changed before each use of the figure with one that has not been used before!
+
+### Decrypting steps:
+The cipher being symmetrical, the decryption algorithm is complementary to the encryption. Thus, the decryption algorithm of a ciphered color image C of size W × H in linear form C = (C<sub>0</sub>, C<sub>1</sub>, ..., C<sub> W * H - 1</sub>)using a secret key S is the following: 
+
+-  generate R: a 2 * W * H - 1 long sequence consisting of 32-bit unsigned random integers, using the XORSHIFT32 generator initialized with a non-zero value R<sub>0</sub>
+- generate a random permutation σ of size W × H, using Durstenfeld's algorithm - the modern version of the [Fisher-Yates algorithm](https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle) and the pseudo-random numbers R<sub>1</sub>, ..., R<sub> W * H - 1</sub>. Then, calculate its inverse σ<sup>-1</sup>
+- apply to every pixel in the encrypted image C = (C<sub>0</sub>, C<sub>1</sub>, ..., C<sub> W * H - 1</sub>) the inverse of the substitution relation used in the encryption process, obtaining an intermediate image C' = (C'<sub>0</sub>, C'<sub>1</sub>, ..., C'<sub> W * H - 1</sub>):
+
+![jjjj](https://user-images.githubusercontent.com/57111995/74443856-94f1b080-4e7c-11ea-8cb0-7840ba08b118.png)
+
+- decrypted image  D = (D<sub>0</sub>, D<sub>1</sub>, ..., D<sub>W * H - 1</sub>) is obtained permuting the pixels of image C' according to the permutation σ<sup>-1</sup> , respectively D<sub>σ(k)<sup>-1</sup></sub> = C'<sub>k</sub> for any k ∈ {0,1, ..., W ∗ H - 1}
+
+The correctness of the decryption algorithm is very easy to prove, using the properties of XOR!
