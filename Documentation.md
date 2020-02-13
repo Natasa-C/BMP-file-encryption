@@ -56,7 +56,7 @@ used.
 
 6) a pseudo-random number generator is a deterministic algorithm that generates a sequence of numbers having statistical properties similar to those of a perfectly random sequence of numbers (that is, a sequence of numbers for which the probability of occurrence of a given value is independent of all values previously generated) starting from a seed value.  For example, the XORSHIFT32 generator proposed by George Marsaglia in 2003 generates unsigned 32-bit integers with very good pseudo-random character, using shift operations on bits and XOR [Xorshift](https://en.wikipedia.org/wiki/Xorshift).
 
-### Encrypting steps:
+## Encrypting steps:
 Using the above notations, the encryption algorithm of a color image P (plain image) of size W × H in linear form P = (P<sub>0</sub>,  P<sub>1</sub> , ..., P<sub> W * H - 1</sub>) using a secret key S is the following:
 
 - generate R: a 2 * W * H - 1 long sequence consisting of 32-bit unsigned random integers, using the XORSHIFT32 generator initialized with a non-zero value R<sub>0</sub>
@@ -69,7 +69,7 @@ where SV (starting value) is a 32-bit non-zero integer.
 
 Shared secret key of this cipher is composed of the R and SV, both non-zero unsigned 32-bit integers. To ensure a high level of security of this figure, the common secret key must be changed before each use of the figure with one that has not been used before!
 
-### Decrypting steps:
+## Decrypting steps:
 The cipher being symmetrical, the decryption algorithm is complementary to the encryption. Thus, the decryption algorithm of a ciphered color image C of size W × H in linear form C = (C<sub>0</sub>, C<sub>1</sub>, ..., C<sub> W * H - 1</sub>)using a secret key S is the following: 
 
 -  generate R: a 2 * W * H - 1 long sequence consisting of 32-bit unsigned random integers, using the XORSHIFT32 generator initialized with a non-zero value R<sub>0</sub>
@@ -83,7 +83,7 @@ The cipher being symmetrical, the decryption algorithm is complementary to the e
 The correctness of the decryption algorithm is very easy to prove, using the properties of XOR!
 
 
-### The χ<sup>2</sup> test
+## The χ<sup>2</sup> test
 
 On an encrypted image, an unauthorized person (an attacker who does not know the secret key) can perform several types of attacks to find either the secret key or the image in clear (in many cases, even determining only part of the image can provide very important information to the attacker). One of the simplest attacks is the frequency attack, whereby the attacker will first determine, on each color channel, the frequencies of the pixel values, after which he will try to associate their values, in the decreasing order of the frequencies, with the values he considers most likely to be the right ones.
 
@@ -101,3 +101,22 @@ In the figure below you can see a clear image and the corresponding encrypted im
 It is noted that following the clear image encryption process, having a highly uneven color distribution, an encrypted image was obtained with a uniform distribution of pixel values for each color channel, so a potential attacker will not be able to extract information of statistical nature regarding the initial image or the secret key used.
 
 The visual analysis of the uniformity of the distribution of the pixel values using the color histogram presents several disadvantages, one of them being that the accuracy of the evaluation depends in a decisive way on the visual acuity of the human assessor and on the graphical quality of the histogram. The disadvantages of visual analysis can be eliminated by using a statistical tool to evaluate the uniformity of the distribution of values in a row, respectively the χ<sup>2</sup> test (the chi-square test).
+
+The χ<sup> 2 </sup> test value corresponding to an image of size m × n is calculated using the following formula:
+![vvvv](https://user-images.githubusercontent.com/57111995/74454954-50badc00-4e8d-11ea-8e7f-79320bd1594c.png)
+
+where f<sub>i</sub> is the frequency of the value i (0 ≤ i ≤ 255) on a color channel of the image, and f<sup>-</sup> = (m*n)/256 is the theoretically estimated frequency of any value i. A test value less than or equal to the theoretical threshold value χ<sub>0</sub><sup>2</sup>= 293.25 indicates a uniform histogram on the respective color channel, while a larger value indicates a non-uniform histogram.
+
+For the two images above, the χ<sup>2</sup> test values on the RGB color channels are the following:
+• for the clear image: 211104.79, 348462.19, 197839.49;
+• for encrypted image: 264.48, 251.41, 330.49.
+
+From the previous numerical values it can be observed that the image in clear has strongly uneven distributions of pixels values on all the color channels (an easy fact to observe from the visual analysis of its histogram), while the encrypted image has a uniform distribution of the values pixels on the R and G channels, but show a slight unevenness of the distribution on the B channel (a fact almost impossible to detect by visual analysis!).
+
+## Requirements:
+1) Implement the XORSHIFT32 pseudo-random number generator as a function or macro definition.
+2) Write a function that loads a BMP image into internal memory in linear form. The function will have as a parameter the path of the BMP image.
+3) Write a function that saves in the external memory a BMP image stored linearly in the internal memory. The function will have as a parameter the path of the BMP image.
+4) Write a function that encrypts a BMP image using the encryption algorithm presented. The function will have as parameters the path of the initial image, the path of the encrypted image and the path of a text file containing the secret key.
+5) Write a function that decrypts an encrypted BMP image using the presented decryption algorithm. The function will have as parameters the path of the initial image, the path of the encrypted image and the path of a text file containing the secret key.
+6) Write a function that displays the χ<sup>2</sup> test values for a BMP image on each color channel. The function will have as a parameter the image path.
