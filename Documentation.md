@@ -81,3 +81,20 @@ The cipher being symmetrical, the decryption algorithm is complementary to the e
 - decrypted image  D = (D<sub>0</sub>, D<sub>1</sub>, ..., D<sub>W * H - 1</sub>) is obtained permuting the pixels of image C' according to the permutation σ<sup>-1</sup> , respectively D<sub>σ(k)<sup>-1</sup></sub> = C'<sub>k</sub> for any k ∈ {0,1, ..., W ∗ H - 1}
 
 The correctness of the decryption algorithm is very easy to prove, using the properties of XOR!
+
+On an encrypted image, an unauthorized person (an attacker who does not know the secret key) can perform several types of attacks to find either the secret key or the image in clear (in many cases, even determining only part of the image can provide very important information to the attacker). One of the simplest attacks is the frequency attack, whereby the attacker will first determine, on each color channel, the frequencies of the pixel values, after which he will try to associate their values, in the decreasing order of the frequencies, with the values he considers most likely to be the right ones.
+
+For example, if the attacker predicts that original image contains several warships on missions, he can assume that most pixels are blue (or shades of blue), so they have RGB values of the form (0, 0, 255) . Consequently, he will replace, in all pixels, the maximum frequency values on the R and G color channels with 0, and the maximum frequency value on the color channel B with 255. After that, he can assume that the rest of the pixels represent military ships, so the respective pixels may be white (or another color specific to warships) and the previous procedure will resume. Even if in this way he will not be able to reconstruct the original image, it is possible to partially reconstruct the outlines of the ships, so he will find out how many ships are the image - a very important information!
+
+To withstand such statistical attacks, a cipher must produce, regardless of the secret key used, encrypted images with a uniform distribution of pixel values in each color channel, thus hiding the uneven distribution of pixel values in the initial image that can provide relevant statistical information.
+
+The most commonly used visual analysis tool to study the distribution of pixel values of a color image is the color histogram, which graphically represents the frequencies of the pixel values of an image, separately for each color channel.
+
+In the figure below you can see a clear image and the corresponding encrypted image, together with their histograms:
+
+![gffgfg](https://user-images.githubusercontent.com/57111995/74454319-611e8700-4e8c-11ea-9d21-577aa8744ee3.png)
+
+
+It is noted that following the clear image encryption process, having a highly uneven color distribution, an encrypted image was obtained with a uniform distribution of pixel values for each color channel, so a potential attacker will not be able to extract information of statistical nature regarding the initial image or the secret key used.
+
+The visual analysis of the uniformity of the distribution of the pixel values using the color histogram presents several disadvantages, one of them being that the accuracy of the evaluation depends in a decisive way on the visual acuity of the human assessor and on the graphical quality of the histogram. The disadvantages of visual analysis can be eliminated by using a statistical tool to evaluate the uniformity of the distribution of values in a row, respectively the χ<sup>2</sup> test (the chi-square test).
