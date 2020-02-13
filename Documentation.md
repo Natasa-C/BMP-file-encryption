@@ -82,6 +82,9 @@ The cipher being symmetrical, the decryption algorithm is complementary to the e
 
 The correctness of the decryption algorithm is very easy to prove, using the properties of XOR!
 
+
+### The χ<sup>2</sup> test
+
 On an encrypted image, an unauthorized person (an attacker who does not know the secret key) can perform several types of attacks to find either the secret key or the image in clear (in many cases, even determining only part of the image can provide very important information to the attacker). One of the simplest attacks is the frequency attack, whereby the attacker will first determine, on each color channel, the frequencies of the pixel values, after which he will try to associate their values, in the decreasing order of the frequencies, with the values he considers most likely to be the right ones.
 
 For example, if the attacker predicts that original image contains several warships on missions, he can assume that most pixels are blue (or shades of blue), so they have RGB values of the form (0, 0, 255) . Consequently, he will replace, in all pixels, the maximum frequency values on the R and G color channels with 0, and the maximum frequency value on the color channel B with 255. After that, he can assume that the rest of the pixels represent military ships, so the respective pixels may be white (or another color specific to warships) and the previous procedure will resume. Even if in this way he will not be able to reconstruct the original image, it is possible to partially reconstruct the outlines of the ships, so he will find out how many ships are the image - a very important information!
