@@ -46,3 +46,9 @@ In the following, we will describe a simple symmetric cipher that can be used to
 
 4) for 2 pixels P<sub>1</sub> = (P<sub>1</sub><sup>R</sup>, P<sub>1</sub><sup>G</sup>, P<sub>1</sub><sup>B</sup>) and P<sub>2</sub> = (P<sub>2</sub><sup>R</sup>, P<sub>2</sub><sup>G</sup>, P<sub>2</sub><sup>B</sup>) we will consider P<sub>1</sub>⨁P<sub>2</sub> to be the
 pixel (P<sub>1</sub><sup>R</sup>⨁P<sub>2</sub><sup>R</sup>, P<sub>1</sub><sup>G</sup>⨁P<sub>2</sub><sup>G</sup>, P<sub>1</sub><sup>B</sup>⨁P<sub>2</sub><sup>B</sup>)
+
+5) for a pixel P = (P<sup>R</sup>, P<sup>G</sup>, P<sup>B</sup>) and a 32-bit unsigned integer X consisting of unsigned bytes (X<sub>3</sub>, X<sub>2</sub>, X<sub>1</sub>, X<sub>0</sub>) we will note with P⨁X the pixel (P<sup>R</sup> ⨁X<sub>2</sub>, P<sup>G</sup>⨁X<sub>1</sub>, P<sup>B</sup> ⨁X<sub>0</sub>), so the most significant byte X<sub>3</sub> of X will not be
+used.
+
+6) a pseudo-random number generator is a deterministic algorithm that generates a sequence of numbers having statistical properties similar to those of a perfectly random sequence of numbers (that is, a sequence of numbers for which the probability of occurrence of a given value is independent of all values previously generated) starting from a seed value.  For example, the XORSHIFT32 generator proposed by George Marsaglia in 2003 generates unsigned 32-bit integers with very good pseudo-random character, using shift operations on bits and XOR [Xorshift](https://en.wikipedia.org/wiki/Xorshift).
+
