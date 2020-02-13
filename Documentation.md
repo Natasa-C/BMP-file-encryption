@@ -23,3 +23,26 @@ Because the encoding of a BMP image in a binary file follows the little-endian s
 <p align="center">R' = G' = B' = [ 0.299 ∗ R + 0.587 ∗ G + 0.114 ∗ B]</p>
 
 where by [x] we note the whole part of the real number x. The grayscale image obtained has the property that it also uses 3 bytes to represent the color of each pixel, but all the values on the 3 channels are equal.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! figure !!!!!!!!!!!
+
+## The encryption / decryption module
+Cryptography is a branch of mathematics that deals with the secure transmission of information. One of the desires of cryptography is to ensure the confidentiality of data, so that certain information can only be accessed by authorized persons. We achieve this goal by using an encryption process by which intelligible information (a text, an image, an audio file, etc.) is transformed into an unintelligible one. The inverse transformation, by which the encrypted information is returned to the original shape (intelligible) is performed by means of a decryption process. 
+
+A symmetrical figure consists of a pair of algorithms that ensure the encryption and decryption processes, as well as a common secret key (known only to people who want to communicate with each other in a secure way) that controls the two processes.
+
+Basically, the common secret key represents an entry date for encryption and decryption algorithms, so not knowing its exact value will lead to the impossibility of decrypting that message by an unauthorized person.
+
+In the following, we will describe a simple symmetric cipher that can be used to ensure the confidentiality of an image. First, we will present some notations:
+
+1) Be I = ( I<sub>i, j</sub>), 0&le; i &lt; H, 0&le; j&lt; W,  a color image with the width of W pixels and the height of H pixels in matrix form. The linearization of the image I implies the creation of a one-dimensional array L by aligning the lines of the two-dimensional picture I, from top to bottom.
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! figure !!!!!!!!!!!
+
+2) considering a color image I in linear form, the value of each pixel I<sub>k</sub> will be a triplet of unsigned bytes I<sub>k</sub> = (I<sub>k</sub><sup>R</sup>, I<sub>k</sub><sup>G</sup>, I<sub>k</sub><sup>B</sup>).
+
+3) we will note with ⨁ the operation or-exclusively (XOR) between 2 unsigned bytes.
+
+4) for 2 pixels P<sub>1</sub> = (P<sub>1</sub><sup>R</sup>, P<sub>1</sub><sup>G</sup>, P<sub>1</sub><sup>B</sup>) and P<sub>2</sub> = (P<sub>2</sub><sup>R</sup>, P<sub>2</sub><sup>G</sup>, P<sub>2</sub><sup>B</sup>) we will consider P<sub>1</sub>⨁P<sub>2</sub> to be the
+pixel (P<sub>1</sub><sup>R</sup>⨁P<sub>2</sub><sup>R</sup>, P<sub>1</sub><sup>G</sup>⨁P<sub>2</sub><sup>G</sup>, P<sub>1</sub><sup>B</sup>⨁P<sub>2</sub><sup>B</sup>)
