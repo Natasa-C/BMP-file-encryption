@@ -8,7 +8,7 @@
 /*
 To compile:  	gcc encryption_verifier.c -o verifier
 To run:		    ./verifier
-Name of encrypted file to test: output/BMPcriptat.bmp
+Name of encrypted file to test: output/BMPencrypted.bmp
 */
 
 int fileDimension(FILE *f)
